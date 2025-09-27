@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.constraints.NotBlank;
 import java.util.List;
-import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import mate.academy.rickandmorty.model.Character;
 import mate.academy.rickandmorty.service.CharacterService;
@@ -25,8 +24,7 @@ public class CharacterController {
             + "about one character in the universe the animated series Rick & Morty")
     @GetMapping("/random")
     public Character getRandomCharacter() {
-        long randomId = new Random().nextLong(1, 827);
-        return characterService.getById(randomId);
+        return characterService.getRandomCharacter();
     }
 
     @Operation(description = "The request takes a string as an argument,"

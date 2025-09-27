@@ -7,6 +7,7 @@ import mate.academy.rickandmorty.dto.internal.CharacterDto;
 import mate.academy.rickandmorty.model.Character;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(config = MapperConfig.class)
 public interface CharacterMapper {
@@ -19,4 +20,6 @@ public interface CharacterMapper {
     CharacterDto externalToDto(CharacterResultsDto characterResultsDto);
 
     List<CharacterDto> externalToDtoList(List<CharacterResultsDto> externalDtos);
+
+    void updateEntityFromDto(CharacterDto characterDto, @MappingTarget Character Character);
 }
