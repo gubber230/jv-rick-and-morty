@@ -21,5 +21,5 @@ public interface CharacterMapper {
 
     List<CharacterDto> externalToDtoList(List<CharacterResultsDto> externalDtos);
 
-    void updateEntityFromDto(CharacterDto characterDto, @MappingTarget Character Character);
+    void updateEntityFromDto(CharacterDto characterDto, @MappingTarget Character character);
 }

@@ -3,7 +3,6 @@ package mate.academy.rickandmorty.service;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Random;
-
 import lombok.RequiredArgsConstructor;
 import mate.academy.rickandmorty.dto.internal.CharacterDto;
 import mate.academy.rickandmorty.mapper.CharacterMapper;
@@ -55,7 +54,8 @@ public class CharacterServiceImpl implements CharacterService {
     @Override
     public Character getRandomCharacter() {
         Long maxId = repository.findMaxExternalId()
-                .orElseThrow(() -> new EntityNotFoundException("Could not find max characters count"));
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Could not find max characters count"));
         long randomId = new Random().nextLong(1, maxId + 1);
         return repository.findById(randomId)
                 .orElseThrow(
