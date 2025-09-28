@@ -2,7 +2,6 @@ package mate.academy.rickandmorty.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import mate.academy.rickandmorty.dto.internal.CharacterDto;
 import mate.academy.rickandmorty.mapper.CharacterMapper;
@@ -16,12 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class CharacterServiceImpl implements CharacterService {
     private final CharacterMapper mapper;
     private final CharacterRepository repository;
-
-    @Override
-    public void save(CharacterDto characterDto) {
-        Character character = mapper.internalToModel(characterDto);
-        repository.save(character);
-    }
 
     @Override
     @Transactional
@@ -39,29 +32,24 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     @Override
-    public Character getById(Long id) {
-        return repository.findByExternalId(id).orElseThrow(
-                () -> new EntityNotFoundException(
-                        "Could not find Character with id: " + id)
+    public CharacterDto getById(Long id) {
+        return repository.findById(id)
+                .map(mapper::toDto)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(
+                                "Could not find Character with id: " + id)
         );
     }
 
     @Override
-    public List<Character> findByName(String name) {
-        return repository.findByNameContainingIgnoreCase(name);
+    public List<CharacterDto> findByName(String name) {
+        return repository.findByNameContainingIgnoreCase(name).stream()
+                .map(mapper::toDto)
+                .toList();
     }
 
     @Override
-    public Character getRandomCharacter() {
-        Long maxId = repository.findMaxExternalId()
-                .orElseThrow(() ->
-                        new EntityNotFoundException("Could not find max characters count"));
-        long randomId = new Random().nextLong(1, maxId + 1);
-        return repository.findById(randomId)
-                .orElseThrow(
-                        () -> new EntityNotFoundException(
-                                "Error occurred when trying to find Character with id: "
-                                        + randomId)
-                );
+    public CharacterDto getRandomCharacter() {
+        return mapper.toDto(repository.findRandomCharacter());
     }
 }

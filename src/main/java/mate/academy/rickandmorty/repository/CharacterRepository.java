@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 public interface CharacterRepository extends JpaRepository<Character, Long> {
     List<Character> findByNameContainingIgnoreCase(String name);
 
-    Optional<Character> findByExternalId(Long externalId);
+    Optional<Character> findByExternalId(String externalId);
 
-    @Query("SELECT MAX(c.externalId) FROM Character c")
-    Optional<Long> findMaxExternalId();
+    @Query(value = "SELECT * FROM characters ORDER BY RAND() LIMIT 1", nativeQuery = true)
+    Character findRandomCharacter();
 }

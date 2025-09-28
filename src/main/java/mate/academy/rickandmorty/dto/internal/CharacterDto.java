@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record CharacterDto(
-        Long externalId,
+        Long id,
+        String externalId,
         String name,
         String status,
         String gender) {

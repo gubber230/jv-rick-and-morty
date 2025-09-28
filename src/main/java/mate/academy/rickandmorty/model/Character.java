@@ -23,7 +23,7 @@ public class Character {
     private Long id;
     @Column(nullable = false, unique = true)
     @NotNull
-    private Long externalId;
+    private String externalId;
     @Column(nullable = false)
     @NotBlank
     private String name;

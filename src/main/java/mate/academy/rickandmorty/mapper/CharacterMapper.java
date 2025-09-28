@@ -8,6 +8,7 @@ import mate.academy.rickandmorty.model.Character;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.Mappings;
 
 @Mapper(config = MapperConfig.class)
 public interface CharacterMapper {
@@ -16,9 +17,16 @@ public interface CharacterMapper {
     @Mapping(target = "id", ignore = true)
     Character internalToModel(CharacterDto characterDto);
 
-    @Mapping(target = "externalId", source = "id")
+    @Mappings({
+            @Mapping(target = "externalId", source = "id"),
+            @Mapping(target = "id", ignore = true)
+    })
     CharacterDto externalToDto(CharacterResultsDto characterResultsDto);
 
+    @Mappings({
+            @Mapping(target = "externalId", source = "id"),
+            @Mapping(target = "id", ignore = true)
+    })
     List<CharacterDto> externalToDtoList(List<CharacterResultsDto> externalDtos);
 
     void updateEntityFromDto(CharacterDto characterDto, @MappingTarget Character character);
